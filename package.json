@@ -1,0 +1,19 @@
+{
+    "name": "crispy-chicken-backend",
+    "version": "1.0.0",
+    "description": "A Node.js backend to handle subscription, booking, and contact forms.",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js",
+      "test": "echo \"No tests specified\" && exit 0"
+    },
+    "keywords": [],
+    "author": "roni-boiz",
+    "license": "ISC",
+    "dependencies": {
+      "body-parser": "^1.20.2",
+      "express": "^4.18.2",
+      "mysql": "^2.18.1"
+    }
+  }
+  
