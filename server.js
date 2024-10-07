@@ -13,10 +13,10 @@ app.use(bodyParser.json());
 
 // Create MySQL connection
 const db = mysql.createConnection({
-    host: process.env.DB_HOST, // Your database host
-    port: process.env.DB_PORT, // Your database port (3306 for MySQL)
-    user: process.env.DB_USER, // Your database username
-    password: process.env.DB_PASSWORD, // Your database password
+    host: process.env.DB_HOST || 'localhost', // Your database host
+    port: process.env.DB_PORT || '3306', // Your database port (3306 for MySQL)
+    user: process.env.DB_USER || 'root', // Your database username
+    password: process.env.DB_PASSWORD || '', // Your database password
     database: process.env.DB_NAME // Change to your database name
 });
 
