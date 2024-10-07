@@ -1,11 +1,13 @@
 const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -27,7 +29,7 @@ db.connect(err => {
 });
 
 // Endpoint for subscription form
-app.post('/subscribe', (req, res) => {
+app.post('/api/subscribe', (req, res) => {
     const { email } = req.body;
 
     if (!email) {
@@ -44,7 +46,7 @@ app.post('/subscribe', (req, res) => {
 });
 
 // Endpoint for booking form
-app.post('/book', (req, res) => {
+app.post('/api/book', (req, res) => {
     const { name, email, phone, people, date, time, message } = req.body;
 
     if (!name || !email || !phone || !people || !date || !time || !message) {
@@ -61,7 +63,7 @@ app.post('/book', (req, res) => {
 });
 
 // Endpoint for contact form
-app.post('/contact', (req, res) => {
+app.post('/api/contact', (req, res) => {
     const { contact_name, contact_phone, contact_email, contact_message } = req.body;
 
     if (!contact_name || !contact_phone || !contact_email || !contact_message) {
@@ -78,7 +80,7 @@ app.post('/contact', (req, res) => {
 });
 
 // Endpoint for comment form
-app.post('/comment', (req, res) => {
+app.post('/api/comment', (req, res) => {
     const { comment_name, comment_email, comment } = req.body;
 
     if (!comment_name || !comment_email || !comment) {
