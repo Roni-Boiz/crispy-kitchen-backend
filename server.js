@@ -29,12 +29,12 @@ db.connect(err => {
 });
 
 // Health check endpoint to verify backend status
-app.get('/api/health', (req, res) => {
+app.get('/health', (req, res) => {
     res.status(200).json({ message: 'Backend is running properly!' });
 });
 
 // Endpoint for subscription form
-app.post('/api/subscribe', (req, res) => {
+app.post('/subscribe', (req, res) => {
     const { subscribe_email } = req.body;
 
     if (!subscribe_email) {
@@ -51,7 +51,7 @@ app.post('/api/subscribe', (req, res) => {
 });
 
 // Endpoint for booking form
-app.post('/api/book', (req, res) => {
+app.post('/book', (req, res) => {
     const { name, email, phone, people, date, time, message } = req.body;
 
     if (!name || !email || !phone || !people || !date || !time || !message) {
@@ -68,7 +68,7 @@ app.post('/api/book', (req, res) => {
 });
 
 // Endpoint for contact form
-app.post('/api/contact', (req, res) => {
+app.post('/contact', (req, res) => {
     const { contact_name, contact_phone, contact_email, contact_message } = req.body;
 
     if (!contact_name || !contact_phone || !contact_email || !contact_message) {
@@ -85,7 +85,7 @@ app.post('/api/contact', (req, res) => {
 });
 
 // Endpoint for comment form
-app.post('/api/comment', (req, res) => {
+app.post('/comment', (req, res) => {
     const { comment_name, comment_email, comment } = req.body;
 
     if (!comment_name || !comment_email || !comment) {
@@ -97,7 +97,7 @@ app.post('/api/comment', (req, res) => {
         if (err) {
             return res.status(500).json({ message: 'Database error: ' + err.message });
         }
-        res.status(201).json({ message: 'Comment submitted successfully!' });
+        res.status(200).json({ message: 'Comment submitted successfully!' });
     });
 });
 
