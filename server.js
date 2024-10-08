@@ -28,16 +28,21 @@ db.connect(err => {
     console.log('Connected to MySQL Database.');
 });
 
+// Health check endpoint to verify backend status
+app.get('/api/health', (req, res) => {
+    res.status(200).json({ message: 'Backend is running properly!' });
+});
+
 // Endpoint for subscription form
 app.post('/api/subscribe', (req, res) => {
-    const { email } = req.body;
+    const { subscribe_email } = req.body;
 
-    if (!email) {
+    if (!subscribe_email) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
     
     const sql = 'INSERT INTO subscribers (email) VALUES (?)';
-    db.query(sql, [email], (err, result) => {
+    db.query(sql, [subscribe_email], (err, result) => {
         if (err) {
             return res.status(500).json({ error: 'Error subscribing' });
         }
@@ -53,7 +58,7 @@ app.post('/api/book', (req, res) => {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 
-    const sql = 'INSERT INTO bookings (name, email, phone, people, date, time, message) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    const sql = 'INSERT INTO bookings (name, email, phone, number_of_persons, booking_date, booking_time, special_request) VALUES (?, ?, ?, ?, ?, ?, ?)';
     db.query(sql, [name, email, phone, people, date, time, message], (err, result) => {
         if (err) {
             return res.status(500).json({ error: 'Error making booking' });
@@ -70,7 +75,7 @@ app.post('/api/contact', (req, res) => {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 
-    const sql = 'INSERT INTO comments (name, phone, email, comment) VALUES (?, ?, ?, ?)';
+    const sql = 'INSERT INTO contactus (name, phone, email, message) VALUES (?, ?, ?, ?)';
     db.query(sql, [contact_name, contact_phone, contact_email, contact_message], (err, result) => {
         if (err) {
             return res.status(500).json({ error: 'Error sending message' });
@@ -97,7 +102,7 @@ app.post('/api/comment', (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
