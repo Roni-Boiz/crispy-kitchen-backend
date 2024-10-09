@@ -44,7 +44,7 @@ app.post('/subscribe', (req, res) => {
     const sql = 'INSERT INTO subscribers (email) VALUES (?)';
     db.query(sql, [subscribe_email], (err, result) => {
         if (err) {
-            return res.status(500).json({ error: 'Error subscribing' });
+            return res.status(500).json({ error: 'Error subscribing' + err.message });
         }
         res.status(200).json({ message: 'Subscribed successfully!' });
     });
@@ -61,7 +61,7 @@ app.post('/book', (req, res) => {
     const sql = 'INSERT INTO bookings (name, email, phone, number_of_persons, booking_date, booking_time, special_request) VALUES (?, ?, ?, ?, ?, ?, ?)';
     db.query(sql, [name, email, phone, people, date, time, message], (err, result) => {
         if (err) {
-            return res.status(500).json({ error: 'Error making booking' });
+            return res.status(500).json({ error: 'Error making booking' + err.message });
         }
         res.status(200).json({ message: 'Booking made successfully!' });
     });
@@ -78,7 +78,7 @@ app.post('/contact', (req, res) => {
     const sql = 'INSERT INTO contactus (name, phone, email, message) VALUES (?, ?, ?, ?)';
     db.query(sql, [contact_name, contact_phone, contact_email, contact_message], (err, result) => {
         if (err) {
-            return res.status(500).json({ error: 'Error sending message' });
+            return res.status(500).json({ error: 'Error sending message: ' + err.message });
         }
         res.status(200).json({ message: 'Message sent successfully!' });
     });
@@ -95,7 +95,7 @@ app.post('/comment', (req, res) => {
     const query = 'INSERT INTO comments (name, email, comment) VALUES (?, ?, ?)';
     db.query(query, [comment_name, comment_email, comment], (err, result) => {
         if (err) {
-            return res.status(500).json({ message: 'Database error: ' + err.message });
+            return res.status(500).json({ error: 'Error sending comment: ' + err.message });
         }
         res.status(200).json({ message: 'Comment submitted successfully!' });
     });
